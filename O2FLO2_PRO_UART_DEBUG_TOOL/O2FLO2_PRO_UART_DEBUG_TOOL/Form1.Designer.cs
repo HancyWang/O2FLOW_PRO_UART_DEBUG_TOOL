@@ -175,6 +175,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox1.AutoSize = true;
             this.groupBox1.Controls.Add(this.pictureBox1);
             this.groupBox1.Controls.Add(this.button_openSerialPort);
@@ -192,7 +194,7 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(235, 740);
+            this.groupBox1.Size = new System.Drawing.Size(235, 708);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Serial Port";
@@ -324,9 +326,9 @@
             this.groupBox5.Controls.Add(this.groupBox9);
             this.groupBox5.Controls.Add(this.groupBox7);
             this.groupBox5.Controls.Add(this.chart1);
-            this.groupBox5.Location = new System.Drawing.Point(255, 363);
+            this.groupBox5.Location = new System.Drawing.Point(255, 383);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(1361, 393);
+            this.groupBox5.Size = new System.Drawing.Size(1926, 375);
             this.groupBox5.TabIndex = 3;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Flow Curve";
@@ -395,7 +397,7 @@
             this.groupBox9.Controls.Add(this.label29);
             this.groupBox9.Location = new System.Drawing.Point(561, 25);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(350, 109);
+            this.groupBox9.Size = new System.Drawing.Size(944, 109);
             this.groupBox9.TabIndex = 2;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Manual Set PWM";
@@ -456,7 +458,7 @@
             this.groupBox7.Controls.Add(this.label26);
             this.groupBox7.Location = new System.Drawing.Point(12, 25);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(538, 109);
+            this.groupBox7.Size = new System.Drawing.Size(1129, 109);
             this.groupBox7.TabIndex = 1;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Set Y axi";
@@ -543,9 +545,8 @@
             // 
             // chart1
             // 
-            this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             chartArea1.Name = "ChartArea1";
             this.chart1.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
@@ -553,7 +554,7 @@
             this.chart1.Location = new System.Drawing.Point(12, 140);
             this.chart1.Name = "chart1";
             this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Excel;
-            this.chart1.Size = new System.Drawing.Size(1303, 229);
+            this.chart1.Size = new System.Drawing.Size(1900, 211);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             // 
@@ -569,24 +570,22 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox2.Controls.Add(this.groupBox8);
             this.groupBox2.Controls.Add(this.groupBox6);
             this.groupBox2.Controls.Add(this.groupBox4);
             this.groupBox2.Controls.Add(this.groupBox3);
             this.groupBox2.Controls.Add(this.label11);
             this.groupBox2.Location = new System.Drawing.Point(255, 36);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(1337, 319);
+            this.groupBox2.Size = new System.Drawing.Size(1900, 334);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Simulation";
             // 
             // groupBox6
             // 
-            this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox6.Controls.Add(this.label_PID_set_result);
             this.groupBox6.Controls.Add(this.textBox_I_Min);
             this.groupBox6.Controls.Add(this.textBox_I_Max);
@@ -608,9 +607,9 @@
             this.groupBox6.Controls.Add(this.label22);
             this.groupBox6.Controls.Add(this.label12);
             this.groupBox6.Controls.Add(this.label3);
-            this.groupBox6.Location = new System.Drawing.Point(773, 46);
+            this.groupBox6.Location = new System.Drawing.Point(820, 44);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(218, 268);
+            this.groupBox6.Size = new System.Drawing.Size(218, 275);
             this.groupBox6.TabIndex = 20;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "PID Set";
@@ -809,10 +808,6 @@
             // 
             // groupBox4
             // 
-            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox4.Controls.Add(this.groupBox8);
             this.groupBox4.Controls.Add(this.label_is_12V_ok);
             this.groupBox4.Controls.Add(this.label_is_5V_ok);
             this.groupBox4.Controls.Add(this.label_is_valve_exist);
@@ -835,9 +830,9 @@
             this.groupBox4.Controls.Add(this.label13);
             this.groupBox4.Controls.Add(this.label9);
             this.groupBox4.Controls.Add(this.label);
-            this.groupBox4.Location = new System.Drawing.Point(332, 46);
+            this.groupBox4.Location = new System.Drawing.Point(357, 44);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(989, 267);
+            this.groupBox4.Size = new System.Drawing.Size(441, 275);
             this.groupBox4.TabIndex = 19;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Real Data";
@@ -845,8 +840,6 @@
             // 
             // groupBox8
             // 
-            this.groupBox8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox8.Controls.Add(this.label_pid_get_result);
             this.groupBox8.Controls.Add(this.textBox_I_Min_get);
             this.groupBox8.Controls.Add(this.textBox_I_Max_get);
@@ -867,9 +860,9 @@
             this.groupBox8.Controls.Add(this.label39);
             this.groupBox8.Controls.Add(this.label40);
             this.groupBox8.Controls.Add(this.label41);
-            this.groupBox8.Location = new System.Drawing.Point(668, 0);
+            this.groupBox8.Location = new System.Drawing.Point(1048, 44);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(230, 267);
+            this.groupBox8.Size = new System.Drawing.Size(230, 275);
             this.groupBox8.TabIndex = 45;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "PID Get";
@@ -1237,8 +1230,7 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.Controls.Add(this.checkBox1);
             this.groupBox3.Controls.Add(this.button_FLOW_SEND);
@@ -1257,9 +1249,9 @@
             this.groupBox3.Controls.Add(this.textBox_step);
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Controls.Add(this.textBox_duration);
-            this.groupBox3.Location = new System.Drawing.Point(6, 45);
+            this.groupBox3.Location = new System.Drawing.Point(6, 44);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(637, 269);
+            this.groupBox3.Size = new System.Drawing.Size(345, 274);
             this.groupBox3.TabIndex = 18;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Flow Set";
@@ -1455,7 +1447,7 @@
             this.saveDataToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1590, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(2155, 28);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -1470,6 +1462,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1590, 761);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox2);
