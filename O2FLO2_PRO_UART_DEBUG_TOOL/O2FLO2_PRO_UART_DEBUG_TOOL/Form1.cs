@@ -1079,7 +1079,8 @@ namespace O2FLO2_PRO_UART_DEBUG_TOOL
                         {
                             return;
                         }
-                        double data = (float)(m_HW_buffer[index].DATA_0 * 256 + m_HW_buffer[index].DATA_1);
+                        //double data = (float)(m_HW_buffer[index].DATA_0 * 256 + m_HW_buffer[index].DATA_1);
+                        double data = (float)(m_HW_buffer[index].AVG_FLOW_DATA_0 * 256 + m_HW_buffer[index].AVG_FLOW_DATA_1);
                         data = data > Y_MAX ? Y_MAX : data;
                         table1.Rows.Add(i++, data);
                     }

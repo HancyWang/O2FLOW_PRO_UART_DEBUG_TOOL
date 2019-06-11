@@ -69,6 +69,27 @@
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.label_pid_get_result = new System.Windows.Forms.Label();
+            this.textBox_I_Min_get = new System.Windows.Forms.TextBox();
+            this.textBox_I_Max_get = new System.Windows.Forms.TextBox();
+            this.textBox_P_Max_get = new System.Windows.Forms.TextBox();
+            this.textBox_Kd_get = new System.Windows.Forms.TextBox();
+            this.textBox_Ki_get = new System.Windows.Forms.TextBox();
+            this.textBox_Kp_get = new System.Windows.Forms.TextBox();
+            this.button_PID_GET = new System.Windows.Forms.Button();
+            this.label30 = new System.Windows.Forms.Label();
+            this.label31 = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
+            this.label33 = new System.Windows.Forms.Label();
+            this.label34 = new System.Windows.Forms.Label();
+            this.label35 = new System.Windows.Forms.Label();
+            this.label36 = new System.Windows.Forms.Label();
+            this.label37 = new System.Windows.Forms.Label();
+            this.label38 = new System.Windows.Forms.Label();
+            this.label39 = new System.Windows.Forms.Label();
+            this.label40 = new System.Windows.Forms.Label();
+            this.label41 = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.label_PID_set_result = new System.Windows.Forms.Label();
             this.textBox_I_Min = new System.Windows.Forms.TextBox();
@@ -92,27 +113,6 @@
             this.label12 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.label_pid_get_result = new System.Windows.Forms.Label();
-            this.textBox_I_Min_get = new System.Windows.Forms.TextBox();
-            this.textBox_I_Max_get = new System.Windows.Forms.TextBox();
-            this.textBox_P_Max_get = new System.Windows.Forms.TextBox();
-            this.textBox_Kd_get = new System.Windows.Forms.TextBox();
-            this.textBox_Ki_get = new System.Windows.Forms.TextBox();
-            this.textBox_Kp_get = new System.Windows.Forms.TextBox();
-            this.button_PID_GET = new System.Windows.Forms.Button();
-            this.label30 = new System.Windows.Forms.Label();
-            this.label31 = new System.Windows.Forms.Label();
-            this.label32 = new System.Windows.Forms.Label();
-            this.label33 = new System.Windows.Forms.Label();
-            this.label34 = new System.Windows.Forms.Label();
-            this.label35 = new System.Windows.Forms.Label();
-            this.label36 = new System.Windows.Forms.Label();
-            this.label37 = new System.Windows.Forms.Label();
-            this.label38 = new System.Windows.Forms.Label();
-            this.label39 = new System.Windows.Forms.Label();
-            this.label40 = new System.Windows.Forms.Label();
-            this.label41 = new System.Windows.Forms.Label();
             this.label_is_12V_ok = new System.Windows.Forms.Label();
             this.label_is_5V_ok = new System.Windows.Forms.Label();
             this.label_is_valve_exist = new System.Windows.Forms.Label();
@@ -166,9 +166,9 @@
             this.groupBox7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.groupBox2.SuspendLayout();
+            this.groupBox8.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            this.groupBox8.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -194,7 +194,7 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(235, 708);
+            this.groupBox1.Size = new System.Drawing.Size(235, 687);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Serial Port";
@@ -328,7 +328,7 @@
             this.groupBox5.Controls.Add(this.chart1);
             this.groupBox5.Location = new System.Drawing.Point(255, 383);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(1926, 375);
+            this.groupBox5.Size = new System.Drawing.Size(2491, 354);
             this.groupBox5.TabIndex = 3;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Flow Curve";
@@ -397,7 +397,7 @@
             this.groupBox9.Controls.Add(this.label29);
             this.groupBox9.Location = new System.Drawing.Point(561, 25);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(944, 109);
+            this.groupBox9.Size = new System.Drawing.Size(1509, 109);
             this.groupBox9.TabIndex = 2;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Manual Set PWM";
@@ -458,7 +458,7 @@
             this.groupBox7.Controls.Add(this.label26);
             this.groupBox7.Location = new System.Drawing.Point(12, 25);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(1129, 109);
+            this.groupBox7.Size = new System.Drawing.Size(1694, 109);
             this.groupBox7.TabIndex = 1;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Set Y axi";
@@ -554,7 +554,7 @@
             this.chart1.Location = new System.Drawing.Point(12, 140);
             this.chart1.Name = "chart1";
             this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Excel;
-            this.chart1.Size = new System.Drawing.Size(1900, 211);
+            this.chart1.Size = new System.Drawing.Size(1900, 190);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             // 
@@ -579,10 +579,202 @@
             this.groupBox2.Controls.Add(this.label11);
             this.groupBox2.Location = new System.Drawing.Point(255, 36);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(1900, 334);
+            this.groupBox2.Size = new System.Drawing.Size(1900, 313);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Simulation";
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.label_pid_get_result);
+            this.groupBox8.Controls.Add(this.textBox_I_Min_get);
+            this.groupBox8.Controls.Add(this.textBox_I_Max_get);
+            this.groupBox8.Controls.Add(this.textBox_P_Max_get);
+            this.groupBox8.Controls.Add(this.textBox_Kd_get);
+            this.groupBox8.Controls.Add(this.textBox_Ki_get);
+            this.groupBox8.Controls.Add(this.textBox_Kp_get);
+            this.groupBox8.Controls.Add(this.button_PID_GET);
+            this.groupBox8.Controls.Add(this.label30);
+            this.groupBox8.Controls.Add(this.label31);
+            this.groupBox8.Controls.Add(this.label32);
+            this.groupBox8.Controls.Add(this.label33);
+            this.groupBox8.Controls.Add(this.label34);
+            this.groupBox8.Controls.Add(this.label35);
+            this.groupBox8.Controls.Add(this.label36);
+            this.groupBox8.Controls.Add(this.label37);
+            this.groupBox8.Controls.Add(this.label38);
+            this.groupBox8.Controls.Add(this.label39);
+            this.groupBox8.Controls.Add(this.label40);
+            this.groupBox8.Controls.Add(this.label41);
+            this.groupBox8.Location = new System.Drawing.Point(1048, 44);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(230, 275);
+            this.groupBox8.TabIndex = 45;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "PID Get";
+            // 
+            // label_pid_get_result
+            // 
+            this.label_pid_get_result.AutoSize = true;
+            this.label_pid_get_result.Location = new System.Drawing.Point(127, 30);
+            this.label_pid_get_result.Name = "label_pid_get_result";
+            this.label_pid_get_result.Size = new System.Drawing.Size(55, 15);
+            this.label_pid_get_result.TabIndex = 44;
+            this.label_pid_get_result.Text = "      ";
+            // 
+            // textBox_I_Min_get
+            // 
+            this.textBox_I_Min_get.Location = new System.Drawing.Point(67, 216);
+            this.textBox_I_Min_get.Name = "textBox_I_Min_get";
+            this.textBox_I_Min_get.Size = new System.Drawing.Size(100, 25);
+            this.textBox_I_Min_get.TabIndex = 43;
+            // 
+            // textBox_I_Max_get
+            // 
+            this.textBox_I_Max_get.Location = new System.Drawing.Point(67, 188);
+            this.textBox_I_Max_get.Name = "textBox_I_Max_get";
+            this.textBox_I_Max_get.Size = new System.Drawing.Size(100, 25);
+            this.textBox_I_Max_get.TabIndex = 42;
+            // 
+            // textBox_P_Max_get
+            // 
+            this.textBox_P_Max_get.Location = new System.Drawing.Point(67, 160);
+            this.textBox_P_Max_get.Name = "textBox_P_Max_get";
+            this.textBox_P_Max_get.Size = new System.Drawing.Size(100, 25);
+            this.textBox_P_Max_get.TabIndex = 41;
+            // 
+            // textBox_Kd_get
+            // 
+            this.textBox_Kd_get.Location = new System.Drawing.Point(67, 132);
+            this.textBox_Kd_get.Name = "textBox_Kd_get";
+            this.textBox_Kd_get.Size = new System.Drawing.Size(100, 25);
+            this.textBox_Kd_get.TabIndex = 40;
+            // 
+            // textBox_Ki_get
+            // 
+            this.textBox_Ki_get.Location = new System.Drawing.Point(67, 104);
+            this.textBox_Ki_get.Name = "textBox_Ki_get";
+            this.textBox_Ki_get.Size = new System.Drawing.Size(100, 25);
+            this.textBox_Ki_get.TabIndex = 38;
+            // 
+            // textBox_Kp_get
+            // 
+            this.textBox_Kp_get.Location = new System.Drawing.Point(67, 77);
+            this.textBox_Kp_get.Name = "textBox_Kp_get";
+            this.textBox_Kp_get.Size = new System.Drawing.Size(100, 25);
+            this.textBox_Kp_get.TabIndex = 37;
+            // 
+            // button_PID_GET
+            // 
+            this.button_PID_GET.Location = new System.Drawing.Point(11, 20);
+            this.button_PID_GET.Name = "button_PID_GET";
+            this.button_PID_GET.Size = new System.Drawing.Size(100, 30);
+            this.button_PID_GET.TabIndex = 35;
+            this.button_PID_GET.Text = "GET";
+            this.button_PID_GET.UseVisualStyleBackColor = true;
+            this.button_PID_GET.Click += new System.EventHandler(this.button_PID_GET_Click);
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(75, 227);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(0, 15);
+            this.label30.TabIndex = 34;
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(75, 199);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(0, 15);
+            this.label31.TabIndex = 33;
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(75, 170);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(0, 15);
+            this.label32.TabIndex = 32;
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(75, 143);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(0, 15);
+            this.label33.TabIndex = 31;
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Location = new System.Drawing.Point(75, 117);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(0, 15);
+            this.label34.TabIndex = 30;
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Location = new System.Drawing.Point(75, 89);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(0, 15);
+            this.label35.TabIndex = 29;
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Location = new System.Drawing.Point(10, 221);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(55, 15);
+            this.label36.TabIndex = 13;
+            this.label36.Text = "I Min:";
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Location = new System.Drawing.Point(10, 195);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(55, 15);
+            this.label37.TabIndex = 12;
+            this.label37.Text = "I Max:";
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Location = new System.Drawing.Point(10, 167);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(55, 15);
+            this.label38.TabIndex = 11;
+            this.label38.Text = "P Max:";
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Location = new System.Drawing.Point(10, 137);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(31, 15);
+            this.label39.TabIndex = 10;
+            this.label39.Text = "Kd:";
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Location = new System.Drawing.Point(10, 111);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(31, 15);
+            this.label40.TabIndex = 9;
+            this.label40.Text = "Ki:";
+            // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Location = new System.Drawing.Point(10, 83);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(31, 15);
+            this.label41.TabIndex = 8;
+            this.label41.Text = "Kp:";
             // 
             // groupBox6
             // 
@@ -837,198 +1029,6 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Real Data";
             this.groupBox4.Enter += new System.EventHandler(this.groupBox4_Enter);
-            // 
-            // groupBox8
-            // 
-            this.groupBox8.Controls.Add(this.label_pid_get_result);
-            this.groupBox8.Controls.Add(this.textBox_I_Min_get);
-            this.groupBox8.Controls.Add(this.textBox_I_Max_get);
-            this.groupBox8.Controls.Add(this.textBox_P_Max_get);
-            this.groupBox8.Controls.Add(this.textBox_Kd_get);
-            this.groupBox8.Controls.Add(this.textBox_Ki_get);
-            this.groupBox8.Controls.Add(this.textBox_Kp_get);
-            this.groupBox8.Controls.Add(this.button_PID_GET);
-            this.groupBox8.Controls.Add(this.label30);
-            this.groupBox8.Controls.Add(this.label31);
-            this.groupBox8.Controls.Add(this.label32);
-            this.groupBox8.Controls.Add(this.label33);
-            this.groupBox8.Controls.Add(this.label34);
-            this.groupBox8.Controls.Add(this.label35);
-            this.groupBox8.Controls.Add(this.label36);
-            this.groupBox8.Controls.Add(this.label37);
-            this.groupBox8.Controls.Add(this.label38);
-            this.groupBox8.Controls.Add(this.label39);
-            this.groupBox8.Controls.Add(this.label40);
-            this.groupBox8.Controls.Add(this.label41);
-            this.groupBox8.Location = new System.Drawing.Point(1048, 44);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(230, 275);
-            this.groupBox8.TabIndex = 45;
-            this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "PID Get";
-            // 
-            // label_pid_get_result
-            // 
-            this.label_pid_get_result.AutoSize = true;
-            this.label_pid_get_result.Location = new System.Drawing.Point(127, 30);
-            this.label_pid_get_result.Name = "label_pid_get_result";
-            this.label_pid_get_result.Size = new System.Drawing.Size(55, 15);
-            this.label_pid_get_result.TabIndex = 44;
-            this.label_pid_get_result.Text = "      ";
-            // 
-            // textBox_I_Min_get
-            // 
-            this.textBox_I_Min_get.Location = new System.Drawing.Point(67, 216);
-            this.textBox_I_Min_get.Name = "textBox_I_Min_get";
-            this.textBox_I_Min_get.Size = new System.Drawing.Size(100, 25);
-            this.textBox_I_Min_get.TabIndex = 43;
-            // 
-            // textBox_I_Max_get
-            // 
-            this.textBox_I_Max_get.Location = new System.Drawing.Point(67, 188);
-            this.textBox_I_Max_get.Name = "textBox_I_Max_get";
-            this.textBox_I_Max_get.Size = new System.Drawing.Size(100, 25);
-            this.textBox_I_Max_get.TabIndex = 42;
-            // 
-            // textBox_P_Max_get
-            // 
-            this.textBox_P_Max_get.Location = new System.Drawing.Point(67, 160);
-            this.textBox_P_Max_get.Name = "textBox_P_Max_get";
-            this.textBox_P_Max_get.Size = new System.Drawing.Size(100, 25);
-            this.textBox_P_Max_get.TabIndex = 41;
-            // 
-            // textBox_Kd_get
-            // 
-            this.textBox_Kd_get.Location = new System.Drawing.Point(67, 132);
-            this.textBox_Kd_get.Name = "textBox_Kd_get";
-            this.textBox_Kd_get.Size = new System.Drawing.Size(100, 25);
-            this.textBox_Kd_get.TabIndex = 40;
-            // 
-            // textBox_Ki_get
-            // 
-            this.textBox_Ki_get.Location = new System.Drawing.Point(67, 104);
-            this.textBox_Ki_get.Name = "textBox_Ki_get";
-            this.textBox_Ki_get.Size = new System.Drawing.Size(100, 25);
-            this.textBox_Ki_get.TabIndex = 38;
-            // 
-            // textBox_Kp_get
-            // 
-            this.textBox_Kp_get.Location = new System.Drawing.Point(67, 77);
-            this.textBox_Kp_get.Name = "textBox_Kp_get";
-            this.textBox_Kp_get.Size = new System.Drawing.Size(100, 25);
-            this.textBox_Kp_get.TabIndex = 37;
-            // 
-            // button_PID_GET
-            // 
-            this.button_PID_GET.Location = new System.Drawing.Point(11, 20);
-            this.button_PID_GET.Name = "button_PID_GET";
-            this.button_PID_GET.Size = new System.Drawing.Size(100, 30);
-            this.button_PID_GET.TabIndex = 35;
-            this.button_PID_GET.Text = "GET";
-            this.button_PID_GET.UseVisualStyleBackColor = true;
-            this.button_PID_GET.Click += new System.EventHandler(this.button_PID_GET_Click);
-            // 
-            // label30
-            // 
-            this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(75, 227);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(0, 15);
-            this.label30.TabIndex = 34;
-            // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(75, 199);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(0, 15);
-            this.label31.TabIndex = 33;
-            // 
-            // label32
-            // 
-            this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(75, 170);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(0, 15);
-            this.label32.TabIndex = 32;
-            // 
-            // label33
-            // 
-            this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(75, 143);
-            this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(0, 15);
-            this.label33.TabIndex = 31;
-            // 
-            // label34
-            // 
-            this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(75, 117);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(0, 15);
-            this.label34.TabIndex = 30;
-            // 
-            // label35
-            // 
-            this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(75, 89);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(0, 15);
-            this.label35.TabIndex = 29;
-            // 
-            // label36
-            // 
-            this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(10, 221);
-            this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(55, 15);
-            this.label36.TabIndex = 13;
-            this.label36.Text = "I Min:";
-            // 
-            // label37
-            // 
-            this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(10, 195);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(55, 15);
-            this.label37.TabIndex = 12;
-            this.label37.Text = "I Max:";
-            // 
-            // label38
-            // 
-            this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(10, 167);
-            this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(55, 15);
-            this.label38.TabIndex = 11;
-            this.label38.Text = "P Max:";
-            // 
-            // label39
-            // 
-            this.label39.AutoSize = true;
-            this.label39.Location = new System.Drawing.Point(10, 137);
-            this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(31, 15);
-            this.label39.TabIndex = 10;
-            this.label39.Text = "Kd:";
-            // 
-            // label40
-            // 
-            this.label40.AutoSize = true;
-            this.label40.Location = new System.Drawing.Point(10, 111);
-            this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(31, 15);
-            this.label40.TabIndex = 9;
-            this.label40.Text = "Ki:";
-            // 
-            // label41
-            // 
-            this.label41.AutoSize = true;
-            this.label41.Location = new System.Drawing.Point(10, 83);
-            this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(31, 15);
-            this.label41.TabIndex = 8;
-            this.label41.Text = "Kp:";
             // 
             // label_is_12V_ok
             // 
@@ -1486,12 +1486,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            this.groupBox8.ResumeLayout(false);
-            this.groupBox8.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
