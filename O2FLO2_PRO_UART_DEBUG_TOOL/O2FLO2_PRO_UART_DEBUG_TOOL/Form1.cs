@@ -55,6 +55,9 @@ namespace O2FLO2_PRO_UART_DEBUG_TOOL
             public int PWM_DC;
             public byte DATA_0;
             public byte DATA_1;
+
+            public byte AVG_FLOW_DATA_0;
+            public byte AVG_FLOW_DATA_1;
         }
 
         private List<SENSOR_DATA> m_HWData_list = new List<SENSOR_DATA>();
@@ -212,6 +215,9 @@ namespace O2FLO2_PRO_UART_DEBUG_TOOL
                                 SENSOR_DATA data = new SENSOR_DATA();
                                 data.DATA_0 = m_HWData_list[i].DATA_0;
                                 data.DATA_1 = m_HWData_list[i].DATA_1;
+
+                                data.AVG_FLOW_DATA_0 = m_HWData_list[i].AVG_FLOW_DATA_0;
+                                data.AVG_FLOW_DATA_1 = m_HWData_list[i].AVG_FLOW_DATA_1;
                                 m_HW_buffer.Add(data);
                             }
                         }
@@ -309,6 +315,8 @@ namespace O2FLO2_PRO_UART_DEBUG_TOOL
             data.DATA_0 = Convert.ToByte(data_recv.FLOW / 256);
             data.DATA_1 = Convert.ToByte(data_recv.FLOW % 256);
 
+            data.AVG_FLOW_DATA_0 = Convert.ToByte(data_recv.AVG_FLOW / 256);
+            data.AVG_FLOW_DATA_1 = Convert.ToByte(data_recv.AVG_FLOW % 256);
             m_HWData_list.Add(data);
         }
 
@@ -1479,9 +1487,12 @@ namespace O2FLO2_PRO_UART_DEBUG_TOOL
                     sw.WriteLine("No.," + "flow_lpm_set,"+"pwm_DC,"+"Data");
                     for (int i = 0; i < m_HWData_list.Count; i++)
                     {
-                        sw.WriteLine(Convert.ToString(i)+","+Convert.ToString(this.m_HWData_list[i].FLOW_LPM_SET)+","+
-                            Convert.ToString(m_HWData_list[i].PWM_DC )+","+
-                            Convert.ToString(m_HWData_list[i].DATA_0 * 256 + m_HWData_list[i].DATA_1));
+                        //sw.WriteLine(Convert.ToString(i)+","+Convert.ToString(this.m_HWData_list[i].FLOW_LPM_SET)+","+
+                        //    Convert.ToString(m_HWData_list[i].PWM_DC )+","+
+                        //    Convert.ToString(m_HWData_list[i].DATA_0 * 256 + m_HWData_list[i].DATA_1));
+                        sw.WriteLine(Convert.ToString(i) + "," + Convert.ToString(this.m_HWData_list[i].FLOW_LPM_SET) + "," +
+                           Convert.ToString(m_HWData_list[i].PWM_DC) + "," +
+                           Convert.ToString(m_HWData_list[i].AVG_FLOW_DATA_0 * 256 + m_HWData_list[i].AVG_FLOW_DATA_1));
                     }
 
                     sw.Close();
