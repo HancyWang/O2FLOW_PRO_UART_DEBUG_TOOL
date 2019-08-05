@@ -24,6 +24,32 @@ namespace O2FLO2_PRO_UART_DEBUG_TOOL
             CURVE_HOLD,
             CURVE_DECREASE
         }
+
+        //crc校验表
+        private UInt16[] crc_table ={                                                                   //Crc table
+0x0000, 0x1021, 0x2042, 0x3063, 0x4084, 0x50a5, 0x60c6, 0x70e7, 0x8108, 0x9129, 0xa14a, 0xb16b,
+0xc18c, 0xd1ad, 0xe1ce, 0xf1ef, 0x1231, 0x0210, 0x3273, 0x2252, 0x52b5, 0x4294, 0x72f7, 0x62d6,
+0x9339, 0x8318, 0xb37b, 0xa35a, 0xd3bd, 0xc39c, 0xf3ff, 0xe3de, 0x2462, 0x3443, 0x0420, 0x1401,
+0x64e6, 0x74c7, 0x44a4, 0x5485, 0xa56a, 0xb54b, 0x8528, 0x9509, 0xe5ee, 0xf5cf, 0xc5ac, 0xd58d,
+0x3653, 0x2672, 0x1611, 0x0630, 0x76d7, 0x66f6, 0x5695, 0x46b4, 0xb75b, 0xa77a, 0x9719, 0x8738,
+0xf7df, 0xe7fe, 0xd79d, 0xc7bc, 0x48c4, 0x58e5, 0x6886, 0x78a7, 0x0840, 0x1861, 0x2802, 0x3823,
+0xc9cc, 0xd9ed, 0xe98e, 0xf9af, 0x8948, 0x9969, 0xa90a, 0xb92b, 0x5af5, 0x4ad4, 0x7ab7, 0x6a96,
+0x1a71, 0x0a50, 0x3a33, 0x2a12, 0xdbfd, 0xcbdc, 0xfbbf, 0xeb9e, 0x9b79, 0x8b58, 0xbb3b, 0xab1a,
+0x6ca6, 0x7c87, 0x4ce4, 0x5cc5, 0x2c22, 0x3c03, 0x0c60, 0x1c41, 0xedae, 0xfd8f, 0xcdec, 0xddcd,
+0xad2a, 0xbd0b, 0x8d68, 0x9d49, 0x7e97, 0x6eb6, 0x5ed5, 0x4ef4, 0x3e13, 0x2e32, 0x1e51, 0x0e70,
+0xff9f, 0xefbe, 0xdfdd, 0xcffc, 0xbf1b, 0xaf3a, 0x9f59, 0x8f78, 0x9188, 0x81a9, 0xb1ca, 0xa1eb,
+0xd10c, 0xc12d, 0xf14e, 0xe16f, 0x1080, 0x00a1, 0x30c2, 0x20e3, 0x5004, 0x4025, 0x7046, 0x6067,
+0x83b9, 0x9398, 0xa3fb, 0xb3da, 0xc33d, 0xd31c, 0xe37f, 0xf35e, 0x02b1, 0x1290, 0x22f3, 0x32d2,
+0x4235, 0x5214, 0x6277, 0x7256, 0xb5ea, 0xa5cb, 0x95a8, 0x8589, 0xf56e, 0xe54f, 0xd52c, 0xc50d,
+0x34e2, 0x24c3, 0x14a0, 0x0481, 0x7466, 0x6447, 0x5424, 0x4405, 0xa7db, 0xb7fa, 0x8799, 0x97b8,
+0xe75f, 0xf77e, 0xc71d, 0xd73c, 0x26d3, 0x36f2, 0x0691, 0x16b0, 0x6657, 0x7676, 0x4615, 0x5634,
+0xd94c, 0xc96d, 0xf90e, 0xe92f, 0x99c8, 0x89e9, 0xb98a, 0xa9ab, 0x5844, 0x4865, 0x7806, 0x6827,
+0x18c0, 0x08e1, 0x3882, 0x28a3, 0xcb7d, 0xdb5c, 0xeb3f, 0xfb1e, 0x8bf9, 0x9bd8, 0xabbb, 0xbb9a,
+0x4a75, 0x5a54, 0x6a37, 0x7a16, 0x0af1, 0x1ad0, 0x2ab3, 0x3a92, 0xfd2e, 0xed0f, 0xdd6c, 0xcd4d,
+0xbdaa, 0xad8b, 0x9de8, 0x8dc9, 0x7c26, 0x6c07, 0x5c64, 0x4c45, 0x3ca2, 0x2c83, 0x1ce0, 0x0cc1,
+0xef1f, 0xff3e, 0xcf5d, 0xdf7c, 0xaf9b, 0xbfba, 0x8fd9, 0x9ff8, 0x6e17, 0x7e36, 0x4e55, 0x5e74,
+0x2e93, 0x3eb2, 0x0ed1, 0x1ef0};
+
         private const int PWM_MAX_DC = 2400;         //占空比最大的值
         private const int INCREASE_CNT = 0;
         private const int DECREASE_CNT = 0;
@@ -36,6 +62,7 @@ namespace O2FLO2_PRO_UART_DEBUG_TOOL
         private CURVE_STATE m_curve_state = CURVE_STATE.CURVE_NONE;
 
         private bool m_b_start_test_valve_curve = false;  //测试比例阀的特性曲线
+        private bool m_b_multiply_10 = false;             //将PID系数放大10倍,例如Kp=25,表示2.5,下位机接收到25后自己拆解成2.5
 
         private string m_flow_pid_FilePath = Environment.CurrentDirectory + @"\" + "flow_pid.ini";
 
@@ -44,10 +71,19 @@ namespace O2FLO2_PRO_UART_DEBUG_TOOL
 
         private List<byte> m_buffer = new List<byte>();
 
-        private const int HEAD = 0;
-        private const int LEN = 1;
-        private const int CMDTYPE = 2;
-        private const int FRAME_ID = 3;
+        private const int HEAD0 = 0;
+        private const int HEAD1 = 1;
+        private const int LEN = 2;
+        private const int DEVICE_ID = 3;
+        private const int CMD_ID = 4;
+
+        private const int DEVICE_ID_PC = 0x00;
+        private const int DEVICE_ID_MLB = 0x01;
+        private const int DEVICE_ID_DRIVER = 0x02;
+        private const int DEVICE_ID_VALVE_CTRL = 0x03;
+
+        private const byte HEAD_MARK0 = 0xAA;
+        private const byte HEAD_MARK1 = 0x55;
 
         public struct SENSOR_DATA
         {
@@ -142,45 +178,106 @@ namespace O2FLO2_PRO_UART_DEBUG_TOOL
         {
             InitializeComponent();
         }
+        private UInt16 Crc_16(byte[] Cdata, int len)
+        {
+
+            UInt16 crc16 = 0;
+            UInt16 crc_h8 = 0;
+            UInt16 crc_l8 = 0; ;
+            int index = 0;
+
+            while (len-- > (UInt16)0)
+            {
+                crc_h8 = Convert.ToUInt16(crc16 >> 8);                                                                          //High byte		
+                crc_l8 = Convert.ToUInt16((UInt16)(crc16 << 8));                                                                          //Low byte
+                crc16 = Convert.ToUInt16(crc_l8 ^ crc_table[crc_h8 ^ Cdata[index]]);
+                index++;
+            }
+            return crc16;
+        }
+
 
         private void serialPort1_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
             var nPendingRead = this.serialPort1.BytesToRead;
             byte[] tmp = new byte[nPendingRead];
             this.serialPort1.Read(tmp, 0, nPendingRead);
-
+            #region
             //m_bRcvParamtersCompleted = false;
+            //lock (m_buffer)
+            //{
+            //    m_buffer.AddRange(tmp);
+            //    #region
+            //    while (m_buffer.Count >= 4)
+            //    {
+            //        if (m_buffer[HEAD] == 0xFF) //帧头
+            //        {
+            //            int len = Convert.ToInt32(m_buffer[LEN]); // 获取帧长度(不包含checksum1和checksum2)
+            //            if (m_buffer.Count < len + 2)  //数据没有接收完全，继续接收
+            //            {
+            //                break;
+            //            }
+            //            int checksum = 256 * Convert.ToInt32(m_buffer[len]) + Convert.ToInt32(m_buffer[len + 1]);
+            //            int sum = 0;
+            //            for (int i = 1; i < len; i++) //校验和不包含包头
+            //            {
+            //                sum += Convert.ToInt32(m_buffer[i]);
+            //            }
+            //            //MessageBox.Show(sum.ToString());
+            //            if (checksum == sum)
+            //            {
+            //                //解析数据
+            //                ParseData2Lists();
+            //            }
+            //            else
+            //            {
+            //                //校验之后发现数据不对,清除该帧数据
+            //                m_buffer.RemoveRange(0, len + 2);
+            //                continue;
+            //            }
+            //            m_buffer.RemoveRange(0, len + 2);
+            //        }
+            //        else
+            //        {
+            //            m_buffer.RemoveAt(0); //清除帧头
+            //        }
+            //    }
+            //    #endregion
+            //}
+            #endregion
             lock (m_buffer)
             {
                 m_buffer.AddRange(tmp);
                 #region
-                while (m_buffer.Count >= 4)
+                while (m_buffer.Count >= 7)
                 {
-                    if (m_buffer[HEAD] == 0xFF) //帧头
+                    if (m_buffer[HEAD0] == 0xAA && m_buffer[HEAD1] == 0x55) //帧头AA55
                     {
                         int len = Convert.ToInt32(m_buffer[LEN]); // 获取帧长度(不包含checksum1和checksum2)
                         if (m_buffer.Count < len + 2)  //数据没有接收完全，继续接收
                         {
                             break;
                         }
-                        int checksum = 256 * Convert.ToInt32(m_buffer[len]) + Convert.ToInt32(m_buffer[len + 1]);
-                        int sum = 0;
-                        for (int i = 1; i < len; i++) //校验和不包含包头
-                        {
-                            sum += Convert.ToInt32(m_buffer[i]);
-                        }
+                        int checksum = Convert.ToInt32(m_buffer[len]) + 256 * Convert.ToInt32(m_buffer[len + 1]);
+
+                        //byte[] bufferArray= m_buffer.ToArray<byte>();  //将链表转成数组
+                        //byte[] buffer=bufferArray.Skip(2).ToArray();  //跳过最前面的两个数据AA55
+                        byte[] buffer = m_buffer.ToArray().Take(m_buffer[LEN]).Skip(2).ToArray();
+
+                        //int sum = Crc_16(buffer, m_buffer[LEN]-2);
+                        int sum = Crc_16(buffer, buffer.Length);
                         //MessageBox.Show(sum.ToString());
                         if (checksum == sum)
                         {
                             //解析数据
                             ParseData2Lists();
                         }
-                        else
-                        {
-                            //校验之后发现数据不对,清除该帧数据
-                            m_buffer.RemoveRange(0, len + 2);
-                            continue;
-                        }
+                        //else
+                        //{
+                        //    //校验之后发现数据不对,清除该帧数据
+                        //    m_buffer.RemoveRange(0, len + 2);
+                        //    continue;
+                        //}
                         m_buffer.RemoveRange(0, len + 2);
                     }
                     else
@@ -195,12 +292,12 @@ namespace O2FLO2_PRO_UART_DEBUG_TOOL
         private void ParseData2Lists()
         {
             //将数据解析挂入到3个链表中
-            if (m_buffer[CMDTYPE] != 0x00)
+            if (m_buffer[DEVICE_ID] != 0x03)
             {
                 return;
             }
             //根据帧类型来判断
-            switch (m_buffer[FRAME_ID])
+            switch (m_buffer[CMD_ID])
             {
                 case 0x92:        //下位机发送回来的数据
                     //ParseData();
@@ -230,11 +327,11 @@ namespace O2FLO2_PRO_UART_DEBUG_TOOL
                     }
                     break;
                 case 0xAB:
-                    if (m_buffer[4] == 0x00)
+                    if (m_buffer[5] == 0x00)
                     {
                         label_PID_set_result.Text = "Modify PID successful!";
                     }
-                    else if (m_buffer[4] == 0x01)
+                    else if (m_buffer[5] == 0x01)
                     {
                         label_PID_set_result.Text = "Disable debug successful!";
                     }
@@ -249,12 +346,12 @@ namespace O2FLO2_PRO_UART_DEBUG_TOOL
 
         private void get_pid_parameter()
         {
-            int kp = m_buffer[4] * 256 * 256 * 256 + m_buffer[5] * 256 * 256 + m_buffer[6] * 256 + m_buffer[7];
-            int ki = m_buffer[8] * 256 * 256 * 256 + m_buffer[9] * 256 * 256 + m_buffer[10] * 256 + m_buffer[11];
-            int kd = m_buffer[12] * 256 * 256 * 256 + m_buffer[13] * 256 * 256 + m_buffer[14] * 256 + m_buffer[15];
-            int P_Max = m_buffer[16] * 256 * 256 * 256 + m_buffer[17] * 256 * 256 + m_buffer[18] * 256 + m_buffer[19];
-            int I_Max = m_buffer[20] * 256 * 256 * 256 + m_buffer[21] * 256 * 256 + m_buffer[22] * 256 + m_buffer[23];
-            int I_Min = m_buffer[24] * 256 * 256 * 256 + m_buffer[25] * 256 * 256 + m_buffer[26] * 256 + m_buffer[27];
+            int kp = m_buffer[5] * 256 * 256 * 256 + m_buffer[6] * 256 * 256 + m_buffer[7] * 256 + m_buffer[8];
+            int ki = m_buffer[9] * 256 * 256 * 256 + m_buffer[10] * 256 * 256 + m_buffer[11] * 256 + m_buffer[12];
+            int kd = m_buffer[13] * 256 * 256 * 256 + m_buffer[14] * 256 * 256 + m_buffer[15] * 256 + m_buffer[16];
+            int P_Max = m_buffer[17] * 256 * 256 * 256 + m_buffer[18] * 256 * 256 + m_buffer[19] * 256 + m_buffer[20];
+            int I_Max = m_buffer[21] * 256 * 256 * 256 + m_buffer[22] * 256 * 256 + m_buffer[23] * 256 + m_buffer[24];
+            int I_Min = m_buffer[25] * 256 * 256 * 256 + m_buffer[26] * 256 * 256 + m_buffer[27] * 256 + m_buffer[28];
 
             this.textBox_Kp_get.Text = Convert.ToString(kp);
             this.textBox_Ki_get.Text = Convert.ToString(ki);
@@ -270,18 +367,18 @@ namespace O2FLO2_PRO_UART_DEBUG_TOOL
         {
             DATA_RECEIVE data_recv = new DATA_RECEIVE();
 
-            data_recv.FLOW_SLPM = Convert.ToUInt16( (m_buffer[4] * 256) + m_buffer[5]);   //flow_slpm
-            data_recv.FLOW_LPM_SET = Convert.ToUInt16((m_buffer[6] * 256) + m_buffer[7]); //flow_lpm_set
-            data_recv.PRO_PWM= Convert.ToUInt16((m_buffer[8] * 256) + m_buffer[9]);       //pro_pwm
+            data_recv.FLOW_SLPM = Convert.ToUInt16( (m_buffer[5] * 256) + m_buffer[6]);   //flow_slpm
+            data_recv.FLOW_LPM_SET = Convert.ToUInt16((m_buffer[7] * 256) + m_buffer[8]); //flow_lpm_set
+            data_recv.PRO_PWM= Convert.ToUInt16((m_buffer[9] * 256) + m_buffer[10]);       //pro_pwm
 
-            data_recv.AVG_FLOW = Convert.ToUInt16((m_buffer[10] * 256) + m_buffer[11]);   //avg_flow
-            data_recv.FLOW = Convert.ToUInt16((m_buffer[12] * 256) + m_buffer[13]);       //flow
-            data_recv.SENSOR_TYPE = m_buffer[14];                                         //sensor_type
-            data_recv.SENSOR_ERR = m_buffer[15];                                          //sensor_err
-            data_recv.CUR_ADC = Convert.ToUInt16((m_buffer[16] * 256) + m_buffer[17]);    //cur_adc
-            data_recv.IS_VALVE_EXIST = m_buffer[18];                                      //is_valve_exist     
-            data_recv.IS_5V_OK = m_buffer[19];                                            //is_5V_ok
-            data_recv.IS_12V_OK = m_buffer[20];                                           //is_12V_ok
+            data_recv.AVG_FLOW = Convert.ToUInt16((m_buffer[11] * 256) + m_buffer[12]);   //avg_flow
+            data_recv.FLOW = Convert.ToUInt16((m_buffer[13] * 256) + m_buffer[14]);       //flow
+            data_recv.SENSOR_TYPE = m_buffer[15];                                         //sensor_type
+            data_recv.SENSOR_ERR = m_buffer[16];                                          //sensor_err
+            data_recv.CUR_ADC = Convert.ToUInt16((m_buffer[17] * 256) + m_buffer[18]);    //cur_adc
+            data_recv.IS_VALVE_EXIST = m_buffer[19];                                      //is_valve_exist     
+            data_recv.IS_5V_OK = m_buffer[20];                                            //is_5V_ok
+            data_recv.IS_12V_OK = m_buffer[21];                                           //is_12V_ok
 
             //TODO,准备一个buffer装数据,解决线程冲突问题
 
@@ -569,15 +666,22 @@ namespace O2FLO2_PRO_UART_DEBUG_TOOL
                 return;
             }
 
-            byte[] send_buffer = new byte[17];
-            send_buffer[0] = 0xFF;
-            send_buffer[LEN] = 17-2;    //发送的包长度,不包含checksum
-            send_buffer[2] = 0x01;
-            send_buffer[3] = 0x91;   
+            //byte[] send_buffer = new byte[17];
+            //send_buffer[0] = 0xFF;
+            //send_buffer[LEN] = 17-2;    //发送的包长度,不包含checksum
+            //send_buffer[2] = 0x01;
+            //send_buffer[3] = 0x91;   
+            int pack_len = 7 + 11;    //7是固定长度，1表示数据有1个字节
+            byte[] send_buffer = new byte[pack_len];
+            send_buffer[HEAD0] = HEAD_MARK0;   //0xAA55是头
+            send_buffer[HEAD1] = HEAD_MARK1;
 
+            send_buffer[LEN] = Convert.ToByte(pack_len - 2);      //长度为6
+            send_buffer[DEVICE_ID] = DEVICE_ID_PC;      //Device ID
+            send_buffer[CMD_ID] = 0x91;      //Cmd ID
 
             DATA_SEND data = new DATA_SEND();
-            UInt32 sum = 0;
+            //UInt32 sum = 0;
             //根据checkbox1是否被勾选,来填充发送的结构体
             if(this.checkBox1.Checked)
             {
@@ -601,38 +705,39 @@ namespace O2FLO2_PRO_UART_DEBUG_TOOL
             }
 
             //is only set flow
-            send_buffer[4] = Convert.ToByte( (checkBox1.Checked == true) ? 1 : 0);
+            send_buffer[5] = Convert.ToByte((checkBox1.Checked == true) ? 1 : 0);
 
             //start_flow
-            send_buffer[5] = Convert.ToByte(data.START_FLOW / 256);
-            send_buffer[6] = Convert.ToByte(data.START_FLOW % 256);
-
+            send_buffer[6] = Convert.ToByte(data.START_FLOW / 256);
+            send_buffer[7] = Convert.ToByte(data.START_FLOW % 256);
+        
             //end_flow
-            send_buffer[7] = Convert.ToByte(data.END_FLOW / 256);
-            send_buffer[8] = Convert.ToByte(data.END_FLOW % 256);
+            send_buffer[8] = Convert.ToByte(data.END_FLOW / 256);
+            send_buffer[9] = Convert.ToByte(data.END_FLOW % 256);
 
             //step
-            send_buffer[9] = Convert.ToByte(data.STEP / 256);
-            send_buffer[10] = Convert.ToByte(data.STEP % 256);
+            send_buffer[10] = Convert.ToByte(data.STEP / 256);
+            send_buffer[11] = Convert.ToByte(data.STEP % 256);
 
             //duration
-            send_buffer[11] = Convert.ToByte(data.DURATION / 256);
-            send_buffer[12] = Convert.ToByte(data.DURATION % 256);
-
+            send_buffer[12] = Convert.ToByte(data.DURATION / 256);
+            send_buffer[13] = Convert.ToByte(data.DURATION % 256);
+        
             //set_flow
-            send_buffer[13] = Convert.ToByte(data.SET_FLOW / 256);
-            send_buffer[14] = Convert.ToByte(data.SET_FLOW % 256);
-
-            for (int i = 1; i < send_buffer[LEN]; i++)
-            {
-                sum += send_buffer[i];
-            }
+            send_buffer[14] = Convert.ToByte(data.SET_FLOW / 256);
+            send_buffer[15] = Convert.ToByte(data.SET_FLOW % 256);
 
             //填充checksum
-            send_buffer[Convert.ToInt32(send_buffer[LEN])] = Convert.ToByte(sum / 256);   //checksum1
-            send_buffer[Convert.ToInt32(send_buffer[LEN]) + 1] = Convert.ToByte(sum % 256); //checksum2
+            byte[] tmp_buffer = new byte[pack_len - 4];
+            for (int i = 0; i < pack_len - 4; i++)
+            {
+                tmp_buffer[i] = send_buffer[i + 2];
+            }
+            UInt16 checksum = Crc_16(tmp_buffer, pack_len - 4);  //获取checksum
+            send_buffer[pack_len - 1] = Convert.ToByte(checksum / 256);
+            send_buffer[pack_len - 2] = Convert.ToByte(checksum % 256);
 
-            this.serialPort1.Write(send_buffer, 0, Convert.ToInt32(send_buffer[LEN]) + 2);
+            this.serialPort1.Write(send_buffer, 0, Convert.ToInt32(send_buffer[2]) + 2);
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -679,70 +784,92 @@ namespace O2FLO2_PRO_UART_DEBUG_TOOL
                 MessageBox.Show("Please open serial port!");
                 return;
             }
-            UInt32 sum = 0;
-            byte[] send_buffer = new byte[31];
-            send_buffer[0] = 0xFF;
-            send_buffer[LEN] = 31 - 2;    //发送的包长度,不包含checksum
-            send_buffer[2] = 0x01;
-            send_buffer[3] = 0xAA;
+            //UInt32 sum = 0;
+            //byte[] send_buffer = new byte[31];
+            //send_buffer[HEAD0] = HEAD_MARK0;
+            //send_buffer[HEAD1] = HEAD_MARK1;
+            //send_buffer[LEN] = 32 - 2;    //发送的包长度,不包含checksum
+            //send_buffer[DEVICE_ID] = DEVICE_ID_PC;
+            //send_buffer[CMD_ID] = 0xAA;
+            int pack_len = 7 + 25;    //7是固定长度，1表示数据有1个字节
+            byte[] send_buffer = new byte[pack_len];
+            send_buffer[HEAD0] = HEAD_MARK0;   //0xAA55是头
+            send_buffer[HEAD1] = HEAD_MARK1;
+
+            send_buffer[LEN] = Convert.ToByte(pack_len - 2);      //长度为6
+            send_buffer[DEVICE_ID] = DEVICE_ID_PC;      //Device ID
+            send_buffer[CMD_ID] = 0xAA;      //Cmd ID
 
             //disable debug
-            send_buffer[4] = Convert.ToByte( this.checkBox_disable_debug.Checked ? 1 : 0);
+            send_buffer[5] = Convert.ToByte( this.checkBox_disable_debug.Checked ? 1 : 0);
 
             //存储PID参数
-            flow_pid_parameter.PID_Kp = Convert.ToInt32(this.textBox_Kp.Text);
-            flow_pid_parameter.PID_Ki = Convert.ToInt32(this.textBox_Ki.Text);
-            flow_pid_parameter.PID_Kd = Convert.ToInt32(this.textBox_Kd.Text);
-            flow_pid_parameter.PID_P_MAX = Convert.ToInt32(this.textBox_P_Max.Text);
-            flow_pid_parameter.PID_I_MAX = Convert.ToInt32(this.textBox_I_Max.Text);
-            flow_pid_parameter.PID_I_MIN = Convert.ToInt32(this.textBox_I_Min.Text);
+            if (m_b_multiply_10)
+            {
+                flow_pid_parameter.PID_Kp = Convert.ToInt32(Convert.ToDouble(this.textBox_Kp.Text) * 10);
+                flow_pid_parameter.PID_Ki = Convert.ToInt32(Convert.ToDouble(this.textBox_Ki.Text) * 10);
+                flow_pid_parameter.PID_Kd = Convert.ToInt32(Convert.ToDouble(this.textBox_Kd.Text) * 10);
+                flow_pid_parameter.PID_P_MAX = Convert.ToInt32(Convert.ToDouble(this.textBox_P_Max.Text) * 10);
+                flow_pid_parameter.PID_I_MAX = Convert.ToInt32(Convert.ToDouble(this.textBox_I_Max.Text) * 10);
+                flow_pid_parameter.PID_I_MIN = Convert.ToInt32(Convert.ToDouble(this.textBox_I_Min.Text) * 10);
+            }
+            else
+            {
+                flow_pid_parameter.PID_Kp = Convert.ToInt32(Convert.ToInt32(this.textBox_Kp.Text) );
+                flow_pid_parameter.PID_Ki = Convert.ToInt32(Convert.ToInt32(this.textBox_Ki.Text) );
+                flow_pid_parameter.PID_Kd = Convert.ToInt32(Convert.ToInt32(this.textBox_Kd.Text) );
+                flow_pid_parameter.PID_P_MAX = Convert.ToInt32(Convert.ToInt32(this.textBox_P_Max.Text) );
+                flow_pid_parameter.PID_I_MAX = Convert.ToInt32(Convert.ToInt32(this.textBox_I_Max.Text) );
+                flow_pid_parameter.PID_I_MIN = Convert.ToInt32(Convert.ToInt32(this.textBox_I_Min.Text) );
+            }
+           
 
             //Kp
-            send_buffer[5] = Convert.ToByte(Convert.ToInt32(this.textBox_Kp.Text) / 65536/256);
-            send_buffer[6] = Convert.ToByte(Convert.ToInt32(this.textBox_Kp.Text) / 65536 % 256);
-            send_buffer[7] = Convert.ToByte(Convert.ToInt32(this.textBox_Kp.Text) % 65536 / 256);
-            send_buffer[8] = Convert.ToByte(Convert.ToInt32(this.textBox_Kp.Text) % 65536 % 256);
+            send_buffer[6] = Convert.ToByte(flow_pid_parameter.PID_Kp / 65536/256);
+            send_buffer[7] = Convert.ToByte(flow_pid_parameter.PID_Kp / 65536 % 256);
+            send_buffer[8] = Convert.ToByte(flow_pid_parameter.PID_Kp % 65536 / 256);
+            send_buffer[9] = Convert.ToByte(flow_pid_parameter.PID_Kp % 65536 % 256);
 
             //Ki
-            send_buffer[9] = Convert.ToByte(Convert.ToInt32(this.textBox_Ki.Text) / 65536 / 256);
-            send_buffer[10] = Convert.ToByte(Convert.ToInt32(this.textBox_Ki.Text) / 65536 % 256);
-            send_buffer[11] = Convert.ToByte(Convert.ToInt32(this.textBox_Ki.Text) % 65536 / 256);
-            send_buffer[12] = Convert.ToByte(Convert.ToInt32(this.textBox_Ki.Text) % 65536 % 256);
+            send_buffer[10] = Convert.ToByte(flow_pid_parameter.PID_Ki / 65536 / 256);
+            send_buffer[11] = Convert.ToByte(flow_pid_parameter.PID_Ki / 65536 % 256);
+            send_buffer[12] = Convert.ToByte(flow_pid_parameter.PID_Ki % 65536 / 256);
+            send_buffer[13] = Convert.ToByte(flow_pid_parameter.PID_Ki % 65536 % 256);
 
             //Kd
-            send_buffer[13] = Convert.ToByte(Convert.ToInt32(this.textBox_Kd.Text) / 65536 / 256);
-            send_buffer[14] = Convert.ToByte(Convert.ToInt32(this.textBox_Kd.Text) / 65536 % 256);
-            send_buffer[15] = Convert.ToByte(Convert.ToInt32(this.textBox_Kd.Text) % 65536 / 256);
-            send_buffer[16] = Convert.ToByte(Convert.ToInt32(this.textBox_Kd.Text) % 65536 % 256);
+            send_buffer[14] = Convert.ToByte(flow_pid_parameter.PID_Kd / 65536 / 256);
+            send_buffer[15] = Convert.ToByte(flow_pid_parameter.PID_Kd / 65536 % 256);
+            send_buffer[16] = Convert.ToByte(flow_pid_parameter.PID_Kd % 65536 / 256);
+            send_buffer[17] = Convert.ToByte(flow_pid_parameter.PID_Kd % 65536 % 256);
 
             //P Max
-            send_buffer[17] = Convert.ToByte(Convert.ToInt32(this.textBox_P_Max.Text) / 65536 / 256);
-            send_buffer[18] = Convert.ToByte(Convert.ToInt32(this.textBox_P_Max.Text) / 65536 % 256);
-            send_buffer[19] = Convert.ToByte(Convert.ToInt32(this.textBox_P_Max.Text) % 65536 / 256);
-            send_buffer[20] = Convert.ToByte(Convert.ToInt32(this.textBox_P_Max.Text) % 65536 % 256);
+            send_buffer[18] = Convert.ToByte(Convert.ToInt32(this.textBox_P_Max.Text) / 65536 / 256);
+            send_buffer[19] = Convert.ToByte(Convert.ToInt32(this.textBox_P_Max.Text) / 65536 % 256);
+            send_buffer[20] = Convert.ToByte(Convert.ToInt32(this.textBox_P_Max.Text) % 65536 / 256);
+            send_buffer[21] = Convert.ToByte(Convert.ToInt32(this.textBox_P_Max.Text) % 65536 % 256);
 
             //I Max
-            send_buffer[21] = Convert.ToByte(Convert.ToInt32(this.textBox_I_Max.Text) / 65536 / 256);
-            send_buffer[22] = Convert.ToByte(Convert.ToInt32(this.textBox_I_Max.Text) / 65536 % 256);
-            send_buffer[23] = Convert.ToByte(Convert.ToInt32(this.textBox_I_Max.Text) % 65536 / 256);
-            send_buffer[24] = Convert.ToByte(Convert.ToInt32(this.textBox_I_Max.Text) % 65536 % 256);
+            send_buffer[22] = Convert.ToByte(Convert.ToInt32(this.textBox_I_Max.Text) / 65536 / 256);
+            send_buffer[23] = Convert.ToByte(Convert.ToInt32(this.textBox_I_Max.Text) / 65536 % 256);
+            send_buffer[24] = Convert.ToByte(Convert.ToInt32(this.textBox_I_Max.Text) % 65536 / 256);
+            send_buffer[25] = Convert.ToByte(Convert.ToInt32(this.textBox_I_Max.Text) % 65536 % 256);
 
             //D Max
-            send_buffer[25] = Convert.ToByte(Convert.ToInt32(this.textBox_I_Min.Text) / 65536 / 256);
-            send_buffer[26] = Convert.ToByte(Convert.ToInt32(this.textBox_I_Min.Text) / 65536 % 256);
-            send_buffer[27] = Convert.ToByte(Convert.ToInt32(this.textBox_I_Min.Text) % 65536 / 256);
-            send_buffer[28] = Convert.ToByte(Convert.ToInt32(this.textBox_I_Min.Text) % 65536 % 256);
-
-
-            for (int i = 1; i < send_buffer[LEN]; i++)
-            {
-                sum += send_buffer[i];
-            }
+            send_buffer[26] = Convert.ToByte(Convert.ToInt32(this.textBox_I_Min.Text) / 65536 / 256);
+            send_buffer[27] = Convert.ToByte(Convert.ToInt32(this.textBox_I_Min.Text) / 65536 % 256);
+            send_buffer[28] = Convert.ToByte(Convert.ToInt32(this.textBox_I_Min.Text) % 65536 / 256);
+            send_buffer[29] = Convert.ToByte(Convert.ToInt32(this.textBox_I_Min.Text) % 65536 % 256);
 
 
             //填充checksum
-            send_buffer[Convert.ToInt32(send_buffer[LEN])] = Convert.ToByte(sum / 256);   //checksum1
-            send_buffer[Convert.ToInt32(send_buffer[LEN]) + 1] = Convert.ToByte(sum % 256); //checksum2
+            byte[] tmp_buffer = new byte[pack_len - 4];
+            for (int i = 0; i < pack_len - 4; i++)
+            {
+                tmp_buffer[i] = send_buffer[i + 2];
+            }
+            UInt16 checksum = Crc_16(tmp_buffer, pack_len - 4);  //获取checksum
+            send_buffer[pack_len - 1] = Convert.ToByte(checksum / 256);
+            send_buffer[pack_len - 2] = Convert.ToByte(checksum % 256);
 
             this.serialPort1.Write(send_buffer, 0, Convert.ToInt32(send_buffer[LEN]) + 2);
         }
@@ -776,7 +903,7 @@ namespace O2FLO2_PRO_UART_DEBUG_TOOL
         private void textBox_Kp_KeyPress(object sender, KeyPressEventArgs e)
         {
             //8-退格键
-            if ((e.KeyChar >= '0' && e.KeyChar <= '9') || (e.KeyChar == 8))
+            if ((e.KeyChar >= '0' && e.KeyChar <= '9') || (e.KeyChar == 8) || (e.KeyChar == '.'))
             {
                 e.Handled = false;
             }
@@ -784,13 +911,13 @@ namespace O2FLO2_PRO_UART_DEBUG_TOOL
             {
                 e.Handled = true;
             }
-            
+
         }
 
         private void textBox_Ki_KeyPress(object sender, KeyPressEventArgs e)
         {
             //8-退格键
-            if ((e.KeyChar >= '0' && e.KeyChar <= '9') || (e.KeyChar == 8))
+            if ((e.KeyChar >= '0' && e.KeyChar <= '9') || (e.KeyChar == 8) || (e.KeyChar == '.'))
             {
                 e.Handled = false;
             }
@@ -798,13 +925,13 @@ namespace O2FLO2_PRO_UART_DEBUG_TOOL
             {
                 e.Handled = true;
             }
-            
+
         }
 
         private void textBox_Kd_KeyPress(object sender, KeyPressEventArgs e)
         {
             //8-退格键
-            if ((e.KeyChar >= '0' && e.KeyChar <= '9') || (e.KeyChar == 8))
+            if ((e.KeyChar >= '0' && e.KeyChar <= '9') || (e.KeyChar == 8)||(e.KeyChar=='.'))
             {
                 e.Handled = false;
             }
@@ -1013,32 +1140,62 @@ namespace O2FLO2_PRO_UART_DEBUG_TOOL
 
         private void send_test_valve_curve()
         {
-            UInt32 sum = 0;
-            byte[] send_buffer = new byte[9];
-            send_buffer[0] = 0xFF;
-            send_buffer[LEN] = 9 - 2;    //发送的包长度,不包含checksum
-            send_buffer[2] = 0x01;
-            send_buffer[3] = 0xAF;
-            
-            send_buffer[4] = this.checkBox_lock_device.Checked ? Convert.ToByte(1) : Convert.ToByte(0);
+            //UInt32 sum = 0;
+            //byte[] send_buffer = new byte[9];
+            //send_buffer[0] = 0xFF;
+            //send_buffer[LEN] = 9 - 2;    //发送的包长度,不包含checksum
+            //send_buffer[2] = 0x01;
+            //send_buffer[3] = 0xAF;
+
+            //send_buffer[4] = this.checkBox_lock_device.Checked ? Convert.ToByte(1) : Convert.ToByte(0);
+
+            //if (Convert.ToInt32(this.textBox_start_PWM_DC.Text) < 0)
+            //{
+            //    this.textBox_start_PWM_DC.Text = "0";
+            //}
+            //send_buffer[5] = Convert.ToByte(Convert.ToInt32(this.textBox_start_PWM_DC.Text) / 256);
+            //send_buffer[6] = Convert.ToByte(Convert.ToInt32(this.textBox_start_PWM_DC.Text) % 256);
+
+            //for (int i = 1; i < send_buffer[LEN]; i++)
+            //{
+            //    sum += send_buffer[i];
+            //}
+
+            ////填充checksum
+            //send_buffer[Convert.ToInt32(send_buffer[LEN])] = Convert.ToByte(sum / 256);   //checksum1
+            //send_buffer[Convert.ToInt32(send_buffer[LEN]) + 1] = Convert.ToByte(sum % 256); //checksum2
+
+            //this.serialPort1.Write(send_buffer, 0, Convert.ToInt32(send_buffer[LEN]) + 2);
+
+            int pack_len = 7 + 3;    //7是固定长度，1表示数据有1个字节
+            byte[] send_buffer = new byte[pack_len];
+            send_buffer[HEAD0] = HEAD_MARK0;   //0xAA55是头
+            send_buffer[HEAD1] = HEAD_MARK1;
+
+            send_buffer[LEN] = Convert.ToByte(pack_len - 2);      //长度为6
+            send_buffer[DEVICE_ID] = DEVICE_ID_PC;      //Device ID
+            send_buffer[CMD_ID] = 0xAF;      //Cmd ID
+
+            send_buffer[5] = this.checkBox_lock_device.Checked ? Convert.ToByte(1) : Convert.ToByte(0);
 
             if (Convert.ToInt32(this.textBox_start_PWM_DC.Text) < 0)
             {
                 this.textBox_start_PWM_DC.Text = "0";
             }
-            send_buffer[5] = Convert.ToByte(Convert.ToInt32(this.textBox_start_PWM_DC.Text) / 256);
-            send_buffer[6] = Convert.ToByte(Convert.ToInt32(this.textBox_start_PWM_DC.Text) % 256);
-
-            for (int i = 1; i < send_buffer[LEN]; i++)
-            {
-                sum += send_buffer[i];
-            }
+            send_buffer[6] = Convert.ToByte(Convert.ToInt32(this.textBox_start_PWM_DC.Text) / 256);
+            send_buffer[7] = Convert.ToByte(Convert.ToInt32(this.textBox_start_PWM_DC.Text) % 256);
 
             //填充checksum
-            send_buffer[Convert.ToInt32(send_buffer[LEN])] = Convert.ToByte(sum / 256);   //checksum1
-            send_buffer[Convert.ToInt32(send_buffer[LEN]) + 1] = Convert.ToByte(sum % 256); //checksum2
+            byte[] tmp_buffer = new byte[pack_len - 4];
+            for (int i = 0; i < pack_len - 4; i++)
+            {
+                tmp_buffer[i] = send_buffer[i + 2];
+            }
+            UInt16 checksum = Crc_16(tmp_buffer, pack_len - 4);  //获取checksum
+            send_buffer[pack_len - 1] = Convert.ToByte(checksum / 256);
+            send_buffer[pack_len - 2] = Convert.ToByte(checksum % 256);
 
-            this.serialPort1.Write(send_buffer, 0, Convert.ToInt32(send_buffer[LEN]) + 2);
+            this.serialPort1.Write(send_buffer, 0, Convert.ToInt32(send_buffer[2]) + 2);
         }
 
         private void show_chart(object list_data)
@@ -1381,78 +1538,78 @@ namespace O2FLO2_PRO_UART_DEBUG_TOOL
 
         private void textBox_Kp_TextChanged(object sender, EventArgs e)
         {
-            if (this.textBox_Kp.Text == "")
-            {
-                flow_pid_parameter.PID_Kp = 0;
-            }
-            else
-            {
-                flow_pid_parameter.PID_Kp = Convert.ToInt32(this.textBox_Kp.Text);
-            }
+            //if (this.textBox_Kp.Text == "")
+            //{
+            //    flow_pid_parameter.PID_Kp = 0;
+            //}
+            //else
+            //{
+            //    flow_pid_parameter.PID_Kp = Convert.ToInt32(this.textBox_Kp.Text);
+            //}
             
         }
 
         private void textBox_Ki_TextChanged(object sender, EventArgs e)
         {
-            if (this.textBox_Ki.Text == "")
-            {
-                flow_pid_parameter.PID_Ki = 0;
-            }
-            else
-            {
-                flow_pid_parameter.PID_Ki = Convert.ToInt32(this.textBox_Ki.Text);
-            }
+            //if (this.textBox_Ki.Text == "")
+            //{
+            //    flow_pid_parameter.PID_Ki = 0;
+            //}
+            //else
+            //{
+            //    flow_pid_parameter.PID_Ki = Convert.ToInt32(this.textBox_Ki.Text);
+            //}
            
         }
 
         private void textBox_Kd_TextChanged(object sender, EventArgs e)
         {
-            if (this.textBox_Kd.Text == "")
-            {
-                flow_pid_parameter.PID_Kd = 0;
-            }
-            else
-            {
-                flow_pid_parameter.PID_Kd = Convert.ToInt32(this.textBox_Kd.Text);
-            }
+            //if (this.textBox_Kd.Text == "")
+            //{
+            //    flow_pid_parameter.PID_Kd = 0;
+            //}
+            //else
+            //{
+            //    flow_pid_parameter.PID_Kd = Convert.ToInt32(this.textBox_Kd.Text);
+            //}
             
         }
 
         private void textBox_P_Max_TextChanged(object sender, EventArgs e)
         {
-            if (this.textBox_P_Max.Text == "")
-            {
-                flow_pid_parameter.PID_P_MAX = 0;
-            }
-            else
-            {
-                flow_pid_parameter.PID_P_MAX = Convert.ToInt32(this.textBox_P_Max.Text);
-            }
+            //if (this.textBox_P_Max.Text == "")
+            //{
+            //    flow_pid_parameter.PID_P_MAX = 0;
+            //}
+            //else
+            //{
+            //    flow_pid_parameter.PID_P_MAX = Convert.ToInt32(this.textBox_P_Max.Text);
+            //}
         }
 
         private void textBox_I_Max_TextChanged(object sender, EventArgs e)
         {
-            if (this.textBox_I_Max.Text == "")
-            {
-                flow_pid_parameter.PID_I_MAX = 0;
-            }
-            else
-            {
-                flow_pid_parameter.PID_I_MAX = Convert.ToInt32(this.textBox_I_Max.Text);
-            }
+            //if (this.textBox_I_Max.Text == "")
+            //{
+            //    flow_pid_parameter.PID_I_MAX = 0;
+            //}
+            //else
+            //{
+            //    flow_pid_parameter.PID_I_MAX = Convert.ToInt32(this.textBox_I_Max.Text);
+            //}
 
         }
 
         private void textBox_I_Min_TextChanged(object sender, EventArgs e)
         {
-            if (this.textBox_I_Min.Text == "")
-            {
-                flow_pid_parameter.PID_I_MIN = 0;
-            }
-            else
-            {
-                flow_pid_parameter.PID_I_MIN = Convert.ToInt32(this.textBox_I_Min.Text);
-            }
+            //if (this.textBox_I_Min.Text == "")
+            //{
+            //    flow_pid_parameter.PID_I_MIN = 0;
+            //}
+            //else
+            //{
+            //    flow_pid_parameter.PID_I_MIN = Convert.ToInt32(this.textBox_I_Min.Text);
+            //}
             
         }
 
@@ -1515,21 +1672,29 @@ namespace O2FLO2_PRO_UART_DEBUG_TOOL
                 MessageBox.Show("Please open serial port!");
                 return;
             }
-            UInt32 sum = 0;
-            byte[] send_buffer = new byte[6];
-            send_buffer[0] = 0xFF;
-            send_buffer[LEN] = 6 - 2;    //发送的包长度,不包含checksum
-            send_buffer[2] = 0x01;
-            send_buffer[3] = 0xAC;       //发送获取PID参数命令
+            //UInt32 sum = 0;
+            //byte[] send_buffer = new byte[6];
+            //send_buffer[0] = 0xFF;
+            //send_buffer[LEN] = 6 - 2;    //发送的包长度,不包含checksum
+            //send_buffer[2] = 0x01;
+            //send_buffer[3] = 0xAC;       //发送获取PID参数命令
+            int pack_len = 7 + 0;    //7是固定长度，1表示数据有1个字节
+            byte[] send_buffer = new byte[pack_len];
+            send_buffer[HEAD0] = HEAD_MARK0;   //0xAA55是头
+            send_buffer[HEAD1] = HEAD_MARK1;
 
-            for (int i = 1; i < send_buffer[LEN]; i++)
+            send_buffer[LEN] = Convert.ToByte(pack_len - 2);      //长度为6
+            send_buffer[DEVICE_ID] = DEVICE_ID_PC;      //Device ID
+            send_buffer[CMD_ID] = 0xAC;      //Cmd ID
+
+            byte[] tmp_buffer = new byte[pack_len - 4];
+            for (int i = 0; i < pack_len - 4; i++)
             {
-                sum += send_buffer[i];
+                tmp_buffer[i] = send_buffer[i + 2];
             }
-
-            //填充checksum
-            send_buffer[Convert.ToInt32(send_buffer[LEN])] = Convert.ToByte(sum / 256);   //checksum1
-            send_buffer[Convert.ToInt32(send_buffer[LEN]) + 1] = Convert.ToByte(sum % 256); //checksum2
+            UInt16 checksum = Crc_16(tmp_buffer, pack_len - 4);  //获取checksum
+            send_buffer[pack_len - 1] = Convert.ToByte(checksum / 256);
+            send_buffer[pack_len - 2] = Convert.ToByte(checksum % 256);
 
             this.serialPort1.Write(send_buffer, 0, Convert.ToInt32(send_buffer[LEN]) + 2);
         }
@@ -1568,27 +1733,52 @@ namespace O2FLO2_PRO_UART_DEBUG_TOOL
                 MessageBox.Show("Please open serial port!");
                 return;
             }
-            UInt32 sum = 0;
-            byte[] send_buffer = new byte[9];
-            send_buffer[0] = 0xFF;
-            send_buffer[LEN] = 9 - 2;    //发送的包长度,不包含checksum
-            send_buffer[2] = 0x01;
-            send_buffer[3] = 0xAE;
+            //UInt32 sum = 0;
+            //byte[] send_buffer = new byte[9];
+            //send_buffer[0] = 0xFF;
+            //send_buffer[LEN] = 9 - 2;    //发送的包长度,不包含checksum
+            //send_buffer[2] = 0x01;
+            //send_buffer[3] = 0xAE;
 
-            send_buffer[4] = this.checkBox_manual_set_pwm_DC.Checked ? Convert.ToByte(1) : Convert.ToByte(0);
-            send_buffer[5] = Convert.ToByte(Convert.ToInt32(this.textBox_pwm_dc_value.Text) / 256);
-            send_buffer[6] = Convert.ToByte(Convert.ToInt32(this.textBox_pwm_dc_value.Text) % 256);
+            //send_buffer[4] = this.checkBox_manual_set_pwm_DC.Checked ? Convert.ToByte(1) : Convert.ToByte(0);
+            //send_buffer[5] = Convert.ToByte(Convert.ToInt32(this.textBox_pwm_dc_value.Text) / 256);
+            //send_buffer[6] = Convert.ToByte(Convert.ToInt32(this.textBox_pwm_dc_value.Text) % 256);
 
-            for (int i = 1; i < send_buffer[LEN]; i++)
-            {
-                sum += send_buffer[i];
-            }
+            //for (int i = 1; i < send_buffer[LEN]; i++)
+            //{
+            //    sum += send_buffer[i];
+            //}
+
+            ////填充checksum
+            //send_buffer[Convert.ToInt32(send_buffer[LEN])] = Convert.ToByte(sum / 256);   //checksum1
+            //send_buffer[Convert.ToInt32(send_buffer[LEN]) + 1] = Convert.ToByte(sum % 256); //checksum2
+
+            //this.serialPort1.Write(send_buffer, 0, Convert.ToInt32(send_buffer[LEN]) + 2);
+
+            int pack_len = 7 + 3;    //7是固定长度，1表示数据有1个字节
+            byte[] send_buffer = new byte[pack_len];
+            send_buffer[HEAD0] = HEAD_MARK0;   //0xAA55是头
+            send_buffer[HEAD1] = HEAD_MARK1;
+
+            send_buffer[LEN] = Convert.ToByte(pack_len - 2);      //长度为6
+            send_buffer[DEVICE_ID] = DEVICE_ID_PC;      //Device ID
+            send_buffer[CMD_ID] = 0xAE;      //Cmd ID
+
+            send_buffer[5] = this.checkBox_manual_set_pwm_DC.Checked ? Convert.ToByte(1) : Convert.ToByte(0);
+            send_buffer[6] = Convert.ToByte(Convert.ToInt32(this.textBox_pwm_dc_value.Text) / 256);
+            send_buffer[7] = Convert.ToByte(Convert.ToInt32(this.textBox_pwm_dc_value.Text) % 256);
 
             //填充checksum
-            send_buffer[Convert.ToInt32(send_buffer[LEN])] = Convert.ToByte(sum / 256);   //checksum1
-            send_buffer[Convert.ToInt32(send_buffer[LEN]) + 1] = Convert.ToByte(sum % 256); //checksum2
+            byte[] tmp_buffer = new byte[pack_len - 4];
+            for (int i = 0; i < pack_len - 4; i++)
+            {
+                tmp_buffer[i] = send_buffer[i + 2];
+            }
+            UInt16 checksum = Crc_16(tmp_buffer, pack_len - 4);  //获取checksum
+            send_buffer[pack_len - 1] = Convert.ToByte(checksum / 256);
+            send_buffer[pack_len - 2] = Convert.ToByte(checksum % 256);
 
-            this.serialPort1.Write(send_buffer, 0, Convert.ToInt32(send_buffer[LEN]) + 2);
+            this.serialPort1.Write(send_buffer, 0, Convert.ToInt32(send_buffer[2]) + 2);
         }
 
         private void button_test_valve_curve_Click(object sender, EventArgs e)

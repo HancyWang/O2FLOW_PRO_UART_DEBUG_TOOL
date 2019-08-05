@@ -113,6 +113,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label43 = new System.Windows.Forms.Label();
             this.label_is_12V_ok = new System.Windows.Forms.Label();
             this.label_is_5V_ok = new System.Windows.Forms.Label();
             this.label_is_valve_exist = new System.Windows.Forms.Label();
@@ -194,7 +195,7 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(235, 687);
+            this.groupBox1.Size = new System.Drawing.Size(235, 561);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Serial Port";
@@ -328,7 +329,7 @@
             this.groupBox5.Controls.Add(this.chart1);
             this.groupBox5.Location = new System.Drawing.Point(255, 383);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(2491, 354);
+            this.groupBox5.Size = new System.Drawing.Size(5881, 228);
             this.groupBox5.TabIndex = 3;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Flow Curve";
@@ -397,7 +398,7 @@
             this.groupBox9.Controls.Add(this.label29);
             this.groupBox9.Location = new System.Drawing.Point(561, 25);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(1509, 109);
+            this.groupBox9.Size = new System.Drawing.Size(4899, 109);
             this.groupBox9.TabIndex = 2;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Manual Set PWM";
@@ -458,7 +459,7 @@
             this.groupBox7.Controls.Add(this.label26);
             this.groupBox7.Location = new System.Drawing.Point(12, 25);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(1694, 109);
+            this.groupBox7.Size = new System.Drawing.Size(5084, 109);
             this.groupBox7.TabIndex = 1;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Set Y axi";
@@ -554,7 +555,7 @@
             this.chart1.Location = new System.Drawing.Point(12, 140);
             this.chart1.Name = "chart1";
             this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Excel;
-            this.chart1.Size = new System.Drawing.Size(1900, 190);
+            this.chart1.Size = new System.Drawing.Size(1900, 64);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             // 
@@ -579,7 +580,7 @@
             this.groupBox2.Controls.Add(this.label11);
             this.groupBox2.Location = new System.Drawing.Point(255, 36);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(1900, 313);
+            this.groupBox2.Size = new System.Drawing.Size(1900, 341);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Simulation";
@@ -828,7 +829,7 @@
             // textBox_I_Max
             // 
             this.textBox_I_Max.Location = new System.Drawing.Point(67, 188);
-            this.textBox_I_Max.MaxLength = 6;
+            this.textBox_I_Max.MaxLength = 10;
             this.textBox_I_Max.Name = "textBox_I_Max";
             this.textBox_I_Max.Size = new System.Drawing.Size(100, 25);
             this.textBox_I_Max.TabIndex = 42;
@@ -1000,6 +1001,7 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.label43);
             this.groupBox4.Controls.Add(this.label_is_12V_ok);
             this.groupBox4.Controls.Add(this.label_is_5V_ok);
             this.groupBox4.Controls.Add(this.label_is_valve_exist);
@@ -1029,6 +1031,16 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Real Data";
             this.groupBox4.Enter += new System.EventHandler(this.groupBox4_Enter);
+            // 
+            // label43
+            // 
+            this.label43.AutoSize = true;
+            this.label43.Location = new System.Drawing.Point(131, 104);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(15, 15);
+            this.label43.TabIndex = 29;
+            this.label43.Text = "%";
+            this.label43.Visible = false;
             // 
             // label_is_12V_ok
             // 
@@ -1629,6 +1641,7 @@
         private System.Windows.Forms.TextBox textBox_start_PWM_DC;
         private System.Windows.Forms.Label label42;
         private System.Windows.Forms.CheckBox checkBox_lock_device;
+        private System.Windows.Forms.Label label43;
     }
 }
 
